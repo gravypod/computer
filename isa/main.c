@@ -3,7 +3,13 @@
 #include <string.h>
 #include <sys/stat.h>
 #include "instructions/cpu.h"
-#include "instructions/add.h"
+
+extern const instruction add_instruction;
+extern const instruction cmp_instruction;
+extern const instruction jmp_instruction;
+extern const instruction jmpc_instruction;
+extern const instruction mov_instruction;
+extern const instruction set_instruction;
 
 #define MEM_SPACE 256
 
@@ -46,8 +52,13 @@ int main()
 	static char args[32]; // Arbitrarily large number of arguments
 	static char memory[MEM_SPACE];
 	static const instruction const *opcodes[] = {
-		NULL,
-		&add_instruction,
+		NULL,              // 0000 0000
+		&add_instruction,  // 0000 0001(from, value, to)
+		&cmp_instruction,  // 0000 0002(left register, right register, to)
+		&jmp_instruction,  // 0000 0003(to)
+		&jmpc_instruction, // 0000 0004(to, condition register)
+		&mov_instruction,  // 0000 0005(from, to)
+		&set_instruction   // 0000 0006(value, to)
 	};
 	static const int max_opcode = sizeof(opcodes) / sizeof(const instruction const *);
 
@@ -68,7 +79,7 @@ int main()
 		{
 			printf("Bad opcode @ pc=%d, mem=%d\n", c.pc, opcode);
 		}
-
+		printf("Opcode %d\n", opcode);
 		// Handle HLT
 		const instruction const *i = opcodes[opcode];
 

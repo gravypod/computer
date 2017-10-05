@@ -12,5 +12,6 @@ typedef struct {
 	char num_args;
 } instruction;
 
+#define REG_LOCATION(r) ((unsigned char) r)
 
 #endif
