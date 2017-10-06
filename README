@@ -2,3 +2,16 @@ An example Virtual Machine
 ====
 
 This is an example for writing a VM that I hacked together in an afternoon.
+
+# compiler/assembler/main.c
+
+Read assembly in from stdin and convert it into a string of ones and zeros.
+
+# compiler/binwalker/main.c
+
+Read a file made from the assembler via stdin and pack it into a binary file
+named program.bin. 
+
+# isa/main.c
+
+Execute the program.bin file. 

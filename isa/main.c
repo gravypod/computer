@@ -38,7 +38,7 @@ void load_program(char memory[], char *file_name)
 
 	while (size > 0)
 	{
-		const size_t len = fread((void*) memory, sizeof(char), size, f);
+		const size_t len = fread((void*) memory, sizeof(char), (size_t) size, f);
 		size -= len;
 		memory += len;
 	}
@@ -55,8 +55,8 @@ int main()
 		NULL,              // 0000 0000
 		&add_instruction,  // 0000 0001(from, value, to)
 		&cmp_instruction,  // 0000 0002(left register, right register, to)
-		&jmp_instruction,  // 0000 0003(to)
-		&jmpc_instruction, // 0000 0004(to, condition register)
+		&jmp_instruction,  // 0000 0003(register with to location)
+		&jmpc_instruction, // 0000 0004(register with to location, condition register)
 		&mov_instruction,  // 0000 0005(from, to)
 		&set_instruction   // 0000 0006(value, to)
 	};
