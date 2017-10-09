@@ -92,7 +92,7 @@ int main()
 		// Handle unfound instruction
 		if (!i)
 		{
-			printf("ERR: Unfound instruction\n");
+			printf("ERR: Unfound instruction (%llu th cycle)\n", cycles);
 			break;
 		}
 
