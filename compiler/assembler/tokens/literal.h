@@ -30,12 +30,12 @@ public:
         if (getToken().length() == 0) {
             return true;
         }
-        int val = getLiteralValue();
-        return val < CHAR_MIN || val > UCHAR_MAX;
+        auto val = (unsigned int) getLiteralValue();
+        return val > USHRT_MAX;
     }
 
-    void evaluate(std::map<std::string, unsigned char> &labels, unsigned char &memory_location) override {
-        write((unsigned char) getLiteralValue());
+    void evaluate(std::map<std::string, unsigned short> &labels, unsigned short &memory_location) override {
+        write((unsigned short) getLiteralValue());
     };
 };
 

@@ -3,7 +3,6 @@
 #include <map>
 #include <algorithm>
 #include <sstream>
-#include <climits>
 #include <cstring>
 #include <fstream>
 #include "instructions.h"
@@ -146,15 +145,15 @@ int assemble(std::istream &in, std::vector<Token *> &tokens) {
 int main() {
     std::vector<Token *> tokens;
 
-    std::ifstream in("test.asm");
-    int status = assemble(in, tokens); // std::cin);
+    //std::ifstream in("test.asm");
+    int status = assemble(std::cin, tokens); // std::cin);
 
     if (status)
         return status;
 
     // Define our labels
-    std::map<std::string, unsigned char> labels;
-    unsigned char memory_location;
+    std::map<std::string, unsigned short> labels;
+    unsigned short memory_location;
 
     // Define all locations of labels
     memory_location = 0;

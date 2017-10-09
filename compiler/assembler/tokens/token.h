@@ -22,19 +22,21 @@ private:
 public:
     explicit Token(std::string &_tok, TokenType _type) : tok(_tok), type(_type) {};
 
-    virtual void evaluate(std::map<std::string, unsigned char> &labels, unsigned char &memory_location) = 0;
+    virtual void evaluate(std::map<std::string, unsigned short> &labels, unsigned short &memory_location) = 0;
 
-    void write(unsigned char data, const bool comment=true, const bool indent=true) {
+    void write(unsigned short data, const bool comment=true, const bool indent=true) {
+        static constexpr size_t NUM_BITS = (CHAR_BIT * sizeof(short));
         static const char one = '1';
         static const char zero = '0';
-        static char binary[CHAR_BIT + 1];
+
+        static char binary[NUM_BITS + 1];
 
         // Clear
-        memset(binary, 0, CHAR_BIT + 1);
+        memset(binary, 0, NUM_BITS + 1);
 
         char mask = 1;
-        for (size_t i = 1; i <= CHAR_BIT; i++) {
-            binary[CHAR_BIT - i] = (data & mask) ? one : zero;
+        for (size_t i = 1; i <= NUM_BITS; i++) {
+            binary[NUM_BITS- i] = (data & mask) ? one : zero;
             mask <<= 1;
         }
 

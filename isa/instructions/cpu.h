@@ -3,12 +3,12 @@
 #define INSTRUCTIONS_CPU
 
 typedef struct {
-	char pc; // Max size of memory
-	char registers[256];
+    short pc; // Max size of memory
+    short registers[256];
 } cpu;
 
 typedef struct {
-	void (*opcode)(cpu *c, const char args[]);
+	void (*opcode)(cpu *c, const short args[]);
 	char num_args;
 } instruction;
 

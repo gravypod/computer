@@ -12,7 +12,7 @@ class OpNameToken : public Token {
 public:
     explicit OpNameToken(std::string &tok) : Token(tok, T_OPCODE) {}
 
-    void evaluate(std::map<std::string, unsigned char> &labels, unsigned char &memory_location) override {
+    void evaluate(std::map<std::string, unsigned short> &labels, unsigned short &memory_location) override {
         write(find_instruction(getToken())->id, true, false);
     };
 };

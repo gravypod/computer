@@ -5,6 +5,8 @@
 #include <ctype.h>
 #include <memory.h>
 
+const static size_t NUM_BITS = (CHAR_BIT * sizeof(short));
+
 /**
  * Check to see if a line only contains blank characters.
  * @param line - Line read from stream
@@ -58,10 +60,10 @@ size_t number_of_ones_and_zeros_in(const char *line) {
  * @param line
  * @return
  */
-unsigned char binary_decode(const char *line) {
-    unsigned char byte = 0;
+unsigned short binary_decode(const char *line) {
+    unsigned short byte = 0;
 
-    for (size_t i = 0; i < CHAR_BIT; i++)
+    for (size_t i = 0; i < NUM_BITS; i++)
         byte = (byte << 1) + (line[i] == '1');
 
     return byte;
@@ -72,20 +74,20 @@ int main(int argc, char **argv) {
     char *line = NULL;
     size_t lin_len;
     ssize_t len = 0;
-    char binary_string_buffer[CHAR_BIT + 1];
+    char binary_string_buffer[NUM_BITS + 1];
 
     FILE *out = fopen(argc < 2 ? "program.bin" : argv[1], "wb");
 
     while ((len = getline(&line, &lin_len, stdin)) > 0) {
 
         // Clear the buffer
-        memset(binary_string_buffer, 0, CHAR_BIT + 1);
+        memset(binary_string_buffer, 0, NUM_BITS + 1);
 
         // Check to see if this is a binary character
         if (is_whitespace(line, len) || is_comment(line, len))
             continue;
 
-        if (number_of_ones_and_zeros_in(line) != CHAR_BIT) {
+        if (number_of_ones_and_zeros_in(line) != NUM_BITS) {
             fprintf(stderr, "ERROR: Line unrecognized ``%s''\n", line);
             exit(1);
         }
@@ -97,8 +99,8 @@ int main(int argc, char **argv) {
             binary_string_buffer[buffer_location++] = line[i];
         }
 
-        const unsigned char byte = binary_decode(binary_string_buffer);
-        fwrite(&byte, sizeof(char), 1, out);
+        const unsigned short byte = binary_decode(binary_string_buffer);
+        fwrite(&byte, sizeof(unsigned short), 1, out);
     }
     fclose(out);
 }

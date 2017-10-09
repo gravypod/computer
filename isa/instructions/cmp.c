@@ -1,13 +1,13 @@
 #include "cpu.h"
 
-void cmp(cpu *c, const char args[])
+void cmp(cpu *c, const short args[])
 {
-    char left  = args[0];
-    char right = args[1];
-    char reg   = args[2];
+    short left  = args[0];
+    short right = args[1];
+    short reg   = args[2];
 
-    char lvalue = c->registers[REG_LOCATION(left)];
-    char rvalue = c->registers[REG_LOCATION(right)];
+    short lvalue = c->registers[REG_LOCATION(left)];
+    short rvalue = c->registers[REG_LOCATION(right)];
 
     if (lvalue < rvalue)
         c->registers[REG_LOCATION(reg)] = -1; // -1 if less

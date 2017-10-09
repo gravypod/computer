@@ -24,8 +24,8 @@ public:
         return tok[0] != 'r' || val < 0 || val > 255;
     }
 
-    void evaluate(std::map<std::string, unsigned char> &labels, unsigned char &memory_location) override {
-        write((unsigned char) getRegisterNumber());
+    void evaluate(std::map<std::string, unsigned short> &labels, unsigned short &memory_location) override {
+        write((unsigned short) getRegisterNumber());
     };
 };
 

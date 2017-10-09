@@ -24,33 +24,46 @@ long int fsize(const char *filename)
 }
 
 
-void load_program(char memory[], char *file_name)
+void load_program(short memory[], char *file_name)
 {
 	long int size = fsize(file_name);
 	FILE *f;
-	if (size == -1 || size > MEM_SPACE || !(f = fopen(file_name, "rb")))
+	if (size == -1 || !(f = fopen(file_name, "rb")))
 	{
 		printf("System err: Program file not found\n");
 		exit(1);
 	}
 
-	int size_copy = (int) size;
+	size_t num_bytes = (size_t) size;
 
-	while (size > 0)
+    if (num_bytes % sizeof(short) != 0)
+    {
+        printf("System err: Malformed program. incorrect number of bytes to fit into program words\n");
+        exit(1);
+    }
+
+
+    if (num_bytes > MEM_SPACE * sizeof(short))
 	{
-		const size_t len = fread((void*) memory, sizeof(char), (size_t) size, f);
-		size -= len;
+		printf("System err: Program too large\n");
+        exit(1);
+	}
+
+	while (num_bytes > 0)
+	{
+		const size_t len = fread((void*) memory, sizeof(char), num_bytes, f);
+		num_bytes -= len;
 		memory += len;
 	}
 
-	printf("System inf: Program correctly loaded! (%d bytes read)\n", size_copy);
+	printf("System inf: Program correctly loaded! (%li bytes read)\n", size);
 }
 
 int main()
 {
 	static cpu c;
-	static char args[32]; // Arbitrarily large number of arguments
-	static char memory[MEM_SPACE];
+	static short args[32]; // Arbitrarily large number of arguments
+	static short memory[MEM_SPACE];
 	static const instruction const *opcodes[] = {
 		NULL,              // 0000 0000
 		&add_instruction,  // 0000 0001(from, value, to)
@@ -73,7 +86,7 @@ int main()
 
 	long long unsigned int cycles = 0;
 	while (1) {
-		const char opcode = memory[c.pc];
+		const short opcode = memory[c.pc];
 
 		if (opcode < 0 || opcode > max_opcode)
 		{

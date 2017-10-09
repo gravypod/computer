@@ -11,9 +11,7 @@ class LabelReferenceToken : public Token {
 public:
     explicit LabelReferenceToken(std::string &tok) : Token(tok, T_LABEL_USE) {}
 
-
-
-    void evaluate(std::map<std::string, unsigned char> &labels, unsigned char &memory_location) override {
+    void evaluate(std::map<std::string, unsigned short> &labels, unsigned short &memory_location) override {
         write(labels[getToken()]);
     };
 };

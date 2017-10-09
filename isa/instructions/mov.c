@@ -1,19 +1,19 @@
 #include "cpu.h"
 
-void set(cpu *c, const char args[])
+void set(cpu *c, const short args[])
 {
-    char val   = args[0];
-    char reg   = args[1];
+    short val   = args[0];
+    short reg   = args[1];
 
     c->registers[REG_LOCATION(reg)] = val;
 }
 const instruction set_instruction = {.opcode=&set, .num_args=2};
 
 
-void mov(cpu *c, const char args[])
+void mov(cpu *c, const short args[])
 {
-    char from  = args[0];
-    char to    = args[1];
+    short from  = args[0];
+    short to    = args[1];
 
     c->registers[REG_LOCATION(to)] = c->registers[REG_LOCATION(from)];
 }

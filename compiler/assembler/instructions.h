@@ -16,7 +16,7 @@ enum ArgType {
 
 typedef struct {
     std::string name;
-    unsigned char id;
+    unsigned short id;
     int num_args;
     std::array<ArgType, MAX_NUM_ARGS> types;
 } ins;

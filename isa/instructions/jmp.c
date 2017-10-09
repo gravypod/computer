@@ -1,8 +1,8 @@
 #include "cpu.h"
 
-void jmp(cpu *c, const char args[])
+void jmp(cpu *c, const short args[])
 {
-    char loc   = args[0];
+    short loc   = args[0];
     // We subtract 2 from the new PC to account for the program loop.
     c->pc = c->registers[REG_LOCATION(loc)];
     c->pc -= 2;
@@ -10,10 +10,10 @@ void jmp(cpu *c, const char args[])
 const instruction jmp_instruction = {.opcode=&jmp, .num_args=1};
 
 
-void jmpc(cpu *c, const char args[])
+void jmpc(cpu *c, const short args[])
 {
-    char loc   = args[0];
-    char reg   = args[1];
+    short loc   = args[0];
+    short reg   = args[1];
 
 
     if (c->registers[REG_LOCATION(reg)]) {
